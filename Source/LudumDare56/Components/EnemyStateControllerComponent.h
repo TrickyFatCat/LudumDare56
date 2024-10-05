@@ -51,8 +51,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool EnterDeathState();
 
+	UFUNCTION(BlueprintGetter)
+	EEnemyState GetCurrentEnemyState() const { return CurrentState; }
+
 protected:
-	UPROPERTY(VisibleInstanceOnly)
+	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetCurrentEnemyState)
 	EEnemyState CurrentState = EEnemyState::Stun;
 	
 	UFUNCTION()
