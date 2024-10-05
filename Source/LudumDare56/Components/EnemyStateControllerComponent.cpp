@@ -59,8 +59,9 @@ bool UEnemyStateControllerComponent::EnterStunState(const float Duration)
 	if (ChangeState(EEnemyState::Stun))
 	{
 		GetWorld()->GetTimerManager().SetTimer(StunTimerHandle,
-		                                       Duration,
-		                                       &UEnemyStateControllerComponent::ExitStunState);
+		                                       this,
+		                                       &UEnemyStateControllerComponent::ExitStunState,
+		                                       Duration);
 	}
 
 	return false;
