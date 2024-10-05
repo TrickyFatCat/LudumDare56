@@ -12,6 +12,7 @@
 UEnemyDataHandler::UEnemyDataHandler()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+	bWantsInitializeComponent = true;
 }
 
 void UEnemyDataHandler::InitializeComponent()
