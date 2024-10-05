@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerTower.generated.h"
 
+class UPlayerLevelComponent;
 class UHitPointsComponent;
 
 UCLASS()
@@ -27,6 +28,9 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Components)
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Components)
+	TObjectPtr<UPlayerLevelComponent> PlayerLevelComponent = nullptr;
 
 private:
 	UFUNCTION()
