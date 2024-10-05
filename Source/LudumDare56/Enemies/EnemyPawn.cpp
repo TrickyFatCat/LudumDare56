@@ -3,8 +3,9 @@
 
 #include "EnemyPawn.h"
 
-#include "MovieSceneSequenceID.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "LudumDare56/Components/EnemyDeathComponent.h"
 #include "LudumDare56/Components/EnemyExperienceComponent.h"
 #include "LudumDare56/Components/EnemyMovementComponent.h"
@@ -36,6 +37,11 @@ AEnemyPawn::AEnemyPawn()
 void AEnemyPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	const FVector PlayerLocation = UGameplayStatics::GetPlayerPawn(this, 0)->GetActorLocation();
+	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), PlayerLocation);
+	NewRotation.Pitch = 0.f;
+	NewRotation.Roll = 0.f;
+	SetActorRotation(NewRotation);
 }
 
 void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Component, EEnemyState NewState)
@@ -49,7 +55,7 @@ void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Compone
 	case EEnemyState::Death:
 		EnemyDeathComponent->StartDeathSequence();
 		break;
-		
+
 	default:
 		EnemyMovementComponent->Deactivate();
 		break;
