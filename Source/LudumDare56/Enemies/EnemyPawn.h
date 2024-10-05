@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "EnemyPawn.generated.h"
 
+class UEnemyDataHandler;
 class UEnemyDeathComponent;
 class UEnemyExperienceComponent;
 enum class EEnemyState : uint8;
@@ -50,6 +51,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<UEnemyDeathComponent> EnemyDeathComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	TObjectPtr<UEnemyDataHandler> EnemyDataHandler = nullptr;
 
 private:
 	UFUNCTION()

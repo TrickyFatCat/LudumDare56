@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "LudumDare56/Components/EnemyDataHandler.h"
 #include "LudumDare56/Components/EnemyDeathComponent.h"
 #include "LudumDare56/Components/EnemyExperienceComponent.h"
 #include "LudumDare56/Components/EnemyMovementComponent.h"
@@ -32,6 +33,7 @@ AEnemyPawn::AEnemyPawn()
 	EnemyMovementComponent = CreateDefaultSubobject<UEnemyMovementComponent>(TEXT("EnemyMovement"));
 	EnemyExperienceComponent = CreateDefaultSubobject<UEnemyExperienceComponent>(TEXT("EnemyExperience"));
 	EnemyDeathComponent = CreateDefaultSubobject<UEnemyDeathComponent>(TEXT("DeathComponent"));
+	EnemyDataHandler = CreateDefaultSubobject<UEnemyDataHandler>(TEXT("DataHandler"));
 }
 
 void AEnemyPawn::BeginPlay()
