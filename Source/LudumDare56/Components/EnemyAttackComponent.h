@@ -11,7 +11,7 @@ class AEnemyProjectile;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttackInitiatedDynamicSignature,
                                             UEnemyAttackComponent*, Component);
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Enemy), meta=(BlueprintSpawnableComponent))
 class LUDUMDARE56_API UEnemyAttackComponent : public UActorComponent
 {
 	GENERATED_BODY()
