@@ -58,7 +58,7 @@ private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetCurrentExperience)
 	int32 CurrentExperience = 0;
 
-	UPROPERTY(VisibleInstanceOnly, BulueprintGetter=GetRequiredExperience)
+	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetRequiredExperience)
 	int32 RequiredExperience = 100;
 
 	UFUNCTION()
