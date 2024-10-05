@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "LudumDare56/Components/EnemyAttackComponent.h"
 #include "LudumDare56/Components/EnemyDataHandler.h"
 #include "LudumDare56/Components/EnemyDeathComponent.h"
 #include "LudumDare56/Components/EnemyExperienceComponent.h"
@@ -34,6 +35,7 @@ AEnemyPawn::AEnemyPawn()
 	EnemyExperienceComponent = CreateDefaultSubobject<UEnemyExperienceComponent>(TEXT("EnemyExperience"));
 	EnemyDeathComponent = CreateDefaultSubobject<UEnemyDeathComponent>(TEXT("DeathComponent"));
 	EnemyDataHandler = CreateDefaultSubobject<UEnemyDataHandler>(TEXT("DataHandler"));
+	EnemyAttackComponent = CreateDefaultSubobject<UEnemyAttackComponent>(TEXT("EnemyAttack"));
 }
 
 void AEnemyPawn::BeginPlay()
@@ -63,9 +65,14 @@ void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Compone
 	case EEnemyState::Idle:
 		SkeletalMeshComponent->PlayAnimation(IdleMontage, true);
 		break;
+		
 	case EEnemyState::Chase:
 		EnemyMovementComponent->Activate(false);
 		SkeletalMeshComponent->PlayAnimation(MovementMontage, true);
+		break;
+
+	case EEnemyState::Attack:
+		EnemyAttackComponent->StartAttack();
 		break;
 
 	case EEnemyState::Death:
