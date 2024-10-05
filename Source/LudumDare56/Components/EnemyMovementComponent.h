@@ -26,7 +26,12 @@ public:
 	UFUNCTION(BlueprintGetter)
 	float GetSpeed() const { return Speed;}
 
+	UFUNCTION(BlueprintSetter)
+	void SetSpeed(const float Value);
+
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetSpeed)
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetSpeed, BlueprintSetter=SetSpeed)
 	float Speed = 500.f;
 };
+
+

@@ -21,6 +21,16 @@ void UEnemyMovementComponent::TickComponent(float DeltaTime,
                                             FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
+
 	GetOwner()->AddActorWorldOffset(GetOwner()->GetActorForwardVector() * Speed * DeltaTime);
+}
+
+void UEnemyMovementComponent::SetSpeed(const float Value)
+{
+	if (Value < 0.f)
+	{
+		return;
+	}
+
+	Speed = Value;
 }
