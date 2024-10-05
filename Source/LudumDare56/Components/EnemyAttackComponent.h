@@ -30,6 +30,9 @@ public:
 	UAnimMontage* AttackMontage = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float Range = 200.0f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 Damage = 1;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
