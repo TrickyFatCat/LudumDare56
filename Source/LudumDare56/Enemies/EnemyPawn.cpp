@@ -5,6 +5,7 @@
 
 #include "MovieSceneSequenceID.h"
 #include "Components/CapsuleComponent.h"
+#include "LudumDare56/Components/EnemyExperienceComponent.h"
 #include "LudumDare56/Components/EnemyMovementComponent.h"
 #include "LudumDare56/Components/EnemyStateControllerComponent.h"
 #include "LudumDare56/Components/HitPointsComponent.h"
@@ -27,6 +28,7 @@ AEnemyPawn::AEnemyPawn()
 	EnemyStateControllerComponent = CreateDefaultSubobject<
 		UEnemyStateControllerComponent>(TEXT("EnemyStateController"));
 	EnemyMovementComponent = CreateDefaultSubobject<UEnemyMovementComponent>(TEXT("EnemyMovement"));
+	EnemyExperienceComponent = CreateDefaultSubobject<UEnemyExperienceComponent>(TEXT("EnemyExperience"));
 }
 
 void AEnemyPawn::BeginPlay()
@@ -59,4 +61,5 @@ void AEnemyPawn::HandleAnyDamageTaken(AActor* DamagedActor,
 void AEnemyPawn::HandleZeroHitPoints(UHitPointsComponent* Component)
 {
 	EnemyStateControllerComponent->EnterDeathState();
+	EnemyExperienceComponent->GiveExperience();
 }
