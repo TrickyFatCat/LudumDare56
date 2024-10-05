@@ -51,7 +51,7 @@ void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Compone
 	switch (NewState)
 	{
 	case EEnemyState::Chase:
-		EnemyMovementComponent->Activate();
+		EnemyMovementComponent->Activate(false);
 		break;
 
 	case EEnemyState::Death:
