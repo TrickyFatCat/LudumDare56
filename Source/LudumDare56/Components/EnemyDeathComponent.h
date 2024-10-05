@@ -27,5 +27,5 @@ public:
 
 protected:
 	UPROPERTY()
-	UAnimInstance* AnimInstance = nullptr;
+	USkeletalMeshComponent* SkeletalMeshComponent = nullptr;
 };

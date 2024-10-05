@@ -14,25 +14,19 @@ void UEnemyDeathComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-
 	if (GetWorld()->IsGameWorld())
 	{
-		USkeletalMeshComponent* SkeletalMeshComponent = GetOwner()->GetComponentByClass<USkeletalMeshComponent>();
-
-		if (IsValid(SkeletalMeshComponent))
-		{
-			AnimInstance = SkeletalMeshComponent->GetAnimInstance();
-		}
+		SkeletalMeshComponent = GetOwner()->GetComponentByClass<USkeletalMeshComponent>();
 	}
 }
 
 bool UEnemyDeathComponent::StartDeathSequence()
 {
-	if (!IsValid(AnimInstance) && !IsValid(DeathMontage))
+	if (!IsValid(DeathMontage))
 	{
 		return false;
 	}
 
-	AnimInstance->Montage_Play(DeathMontage);
+	SkeletalMeshComponent->PlayAnimation(DeathMontage, false);
 	return true;
 }
