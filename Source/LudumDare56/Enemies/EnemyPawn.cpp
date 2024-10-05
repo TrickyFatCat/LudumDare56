@@ -44,6 +44,7 @@ void AEnemyPawn::BeginPlay()
 	NewRotation.Pitch = 0.f;
 	NewRotation.Roll = 0.f;
 	SetActorRotation(NewRotation);
+	EnemyStateControllerComponent->EnterIdleState();
 }
 
 void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Component, EEnemyState NewState)
