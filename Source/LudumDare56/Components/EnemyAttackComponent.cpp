@@ -18,34 +18,18 @@ void UEnemyAttackComponent::InitializeComponent()
 
 	if (GetWorld()->IsGameWorld())
 	{
-		USkeletalMeshComponent* SkeletalMeshComponent = GetOwner()->GetComponentByClass<USkeletalMeshComponent>();
-
-		if (IsValid(SkeletalMeshComponent))
-		{
-			AnimInstance = SkeletalMeshComponent->GetAnimInstance();
-		}
+		SkeletalMeshComponent = GetOwner()->GetComponentByClass<USkeletalMeshComponent>();
 	}
 }
 
 bool UEnemyAttackComponent::StartAttack()
 {
-	if (!IsValid(AnimInstance) && !IsValid(AttackMontage))
+	if (!IsValid(SkeletalMeshComponent) && !IsValid(AttackMontage))
 	{
 		return false;
 	}
 
-	AnimInstance->Montage_Play(AttackMontage);
-	return true;
-}
-
-bool UEnemyAttackComponent::StopAttack()
-{
-	if (!IsValid(AnimInstance) || !IsValid(AttackMontage) || !AnimInstance->Montage_IsPlaying(AttackMontage))
-	{
-		return false;
-	}
-
-	AnimInstance->Montage_Stop(AttackMontage->GetDefaultBlendOutTime(), AttackMontage);
+	SkeletalMeshComponent->PlayAnimation(AttackMontage, true);
 	return true;
 }
 

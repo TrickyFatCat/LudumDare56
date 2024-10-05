@@ -51,12 +51,9 @@ public:
 	bool StartAttack();
 
 	UFUNCTION(BlueprintCallable)
-	bool StopAttack();
-
-	UFUNCTION(BlueprintCallable)
 	void InitiateAttack();
 
 protected:
 	UPROPERTY()
-	UAnimInstance* AnimInstance = nullptr;
+	USkeletalMeshComponent* SkeletalMeshComponent = nullptr;
 };
