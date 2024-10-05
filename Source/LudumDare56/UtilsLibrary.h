@@ -16,5 +16,8 @@ class LUDUMDARE56_API UUtilsLibrary : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable)
-	bool ApplyHeal(AActor* TargetActor, const int32 HealPower);
+	static bool ApplyHeal(AActor* TargetActor, const int32 HealPower);
+
+	UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject", DefaultToSelf))
+	static bool IncreasePlayerExperience(UObject* WorldContextObject, const int32 Amount);
 };

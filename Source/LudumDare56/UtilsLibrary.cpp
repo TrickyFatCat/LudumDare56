@@ -4,6 +4,8 @@
 #include "UtilsLibrary.h"
 
 #include "Components/HitPointsComponent.h"
+#include "Components/PlayerLevelComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 bool UUtilsLibrary::ApplyHeal(AActor* TargetActor, const int32 HealPower)
 {
@@ -20,4 +22,28 @@ bool UUtilsLibrary::ApplyHeal(AActor* TargetActor, const int32 HealPower)
 	}
 
 	return HitPointsComponent->IncreaseHitPoints(HealPower);
+}
+
+bool UUtilsLibrary::IncreasePlayerExperience(UObject* WorldContextObject, const int32 Amount)
+{
+	if (!IsValid(WorldContextObject))
+	{
+		return false;
+	}
+
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(WorldContextObject, 0);
+
+	if (!IsValid(PlayerPawn))
+	{
+		return false;
+	}
+
+	UPlayerLevelComponent* PlayerLevelComponent = PlayerPawn->GetComponentByClass<UPlayerLevelComponent>();
+
+	if (!IsValid(PlayerLevelComponent))
+	{
+		return false;
+	}
+
+	return PlayerLevelComponent->IncreaseExperience(Amount);
 }
