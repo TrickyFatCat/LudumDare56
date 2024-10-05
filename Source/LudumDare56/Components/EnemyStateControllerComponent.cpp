@@ -19,6 +19,13 @@ void UEnemyStateControllerComponent::InitializeComponent()
 	}
 }
 
+void UEnemyStateControllerComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	StopStunTimer();
+	
+	Super::EndPlay(EndPlayReason);
+}
+
 bool UEnemyStateControllerComponent::EnterIdleState()
 {
 	if (CurrentState == EEnemyState::Idle)

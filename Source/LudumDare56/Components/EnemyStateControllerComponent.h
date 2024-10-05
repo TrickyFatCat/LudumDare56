@@ -32,6 +32,8 @@ public:
 protected:
 	virtual void InitializeComponent() override;
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnEnemyStateChangedDynamicSignature OnStateChanged;
