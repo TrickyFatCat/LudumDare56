@@ -9,7 +9,7 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHitDynamicSignature)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHitDynamicSignature);
 
 UCLASS()
 class LUDUMDARE56_API AEnemyProjectile : public AActor
