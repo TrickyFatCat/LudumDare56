@@ -60,11 +60,16 @@ void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Compone
 {
 	switch (NewState)
 	{
+	case EEnemyState::Idle:
+		SkeletalMeshComponent->PlayAnimation(IdleMontage, true);
+		break;
 	case EEnemyState::Chase:
 		EnemyMovementComponent->Activate(false);
+		SkeletalMeshComponent->PlayAnimation(MovementMontage, true);
 		break;
 
 	case EEnemyState::Death:
+		EnemyMovementComponent->Deactivate();
 		EnemyDeathComponent->StartDeathSequence();
 		break;
 

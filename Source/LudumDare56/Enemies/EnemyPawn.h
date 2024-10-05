@@ -27,6 +27,12 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* MovementMontage = nullptr;
+	
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* IdleMontage = nullptr;
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<USceneComponent> Root = nullptr;
