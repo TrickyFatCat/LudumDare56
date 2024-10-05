@@ -38,13 +38,22 @@ AEnemyPawn::AEnemyPawn()
 
 void AEnemyPawn::BeginPlay()
 {
-	Super::BeginPlay();
 	const FVector PlayerLocation = UGameplayStatics::GetPlayerPawn(this, 0)->GetActorLocation();
 	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), PlayerLocation);
 	NewRotation.Pitch = 0.f;
 	NewRotation.Roll = 0.f;
 	SetActorRotation(NewRotation);
 	EnemyStateControllerComponent->EnterIdleState();
+	
+	OnTakeAnyDamage.AddUniqueDynamic(this, &AEnemyPawn::HandleAnyDamageTaken);
+	
+	if (IsValid(HitPointsComponent))
+	{
+		HitPointsComponent->OnZeroHitPoints.AddUniqueDynamic(this, &AEnemyPawn::HandleZeroHitPoints);
+	}
+
+	EnemyStateControllerComponent->OnStateChanged.AddUniqueDynamic(this, &AEnemyPawn::HandleEnemyStateChanged);
+	Super::BeginPlay();
 }
 
 void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Component, EEnemyState NewState)
