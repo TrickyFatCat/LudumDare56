@@ -7,6 +7,7 @@
 UEnemyMovementComponent::UEnemyMovementComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = false;
 	bAutoActivate = false;
 	bWantsInitializeComponent = true;
 }
@@ -23,6 +24,20 @@ void UEnemyMovementComponent::TickComponent(float DeltaTime,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	GetOwner()->AddActorWorldOffset(GetOwner()->GetActorForwardVector() * Speed * DeltaTime);
+}
+
+void UEnemyMovementComponent::Activate(bool bReset)
+{
+	Super::Activate(bReset);
+
+	SetComponentTickEnabled(true);
+}
+
+void UEnemyMovementComponent::Deactivate()
+{
+	Super::Deactivate();
+
+	SetComponentTickEnabled(false);
 }
 
 void UEnemyMovementComponent::SetSpeed(const float Value)

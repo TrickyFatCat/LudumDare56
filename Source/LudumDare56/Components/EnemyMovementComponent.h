@@ -21,6 +21,10 @@ protected:
 public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+	virtual void Activate(bool bReset) override;
+
+	virtual void Deactivate() override;
 	
 public:
 	UFUNCTION(BlueprintGetter)
