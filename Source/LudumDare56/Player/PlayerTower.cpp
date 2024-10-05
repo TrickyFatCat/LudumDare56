@@ -3,6 +3,8 @@
 
 #include "PlayerTower.h"
 
+#include "TrickyGameModeBase.h"
+#include "TrickyGameModeLibrary.h"
 #include "LudumDare56/Components/HitPointsComponent.h"
 
 
@@ -16,6 +18,13 @@ APlayerTower::APlayerTower()
 void APlayerTower::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OnTakeAnyDamage.AddUniqueDynamic(this, &APlayerTower::HandleAnyDamageTaken);
+
+	if (IsValid(HitPointsComponent))
+	{
+		HitPointsComponent->OnZeroHitPoints.AddUniqueDynamic(this, &APlayerTower::HandleZeroHitPoints);
+	}
 }
 
 void APlayerTower::Tick(float DeltaTime)
@@ -28,3 +37,21 @@ void APlayerTower::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void APlayerTower::HandleAnyDamageTaken(AActor* DamagedActor,
+                                        float Damage,
+                                        const UDamageType* DamageType,
+                                        AController* InstigatedBy,
+                                        AActor* DamageCauser)
+{
+	HitPointsComponent->DecreaseHitPoints(Damage);
+}
+
+void APlayerTower::HandleZeroHitPoints(UHitPointsComponent* Component)
+{
+	ATrickyGameModeBase* GameMode = UTrickyGameModeLibrary::GetTrickyGameMode(this);
+
+	if (IsValid(GameMode))
+	{
+		GameMode->FinishSession(false);
+	}
+}

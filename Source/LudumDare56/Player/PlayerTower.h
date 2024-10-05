@@ -27,4 +27,16 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Components)
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
+
+private:
+	UFUNCTION()
+	void HandleAnyDamageTaken(AActor* DamagedActor,
+	                          float Damage,
+	                          const UDamageType* DamageType,
+	                          AController* InstigatedBy,
+	                          AActor* DamageCauser);
+
+
+	UFUNCTION()
+	void HandleZeroHitPoints(UHitPointsComponent* Component);
 };
