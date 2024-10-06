@@ -40,6 +40,7 @@ void AEnemySpawnController::BeginPlay()
 		GameMode->OnStateChanged.AddUniqueDynamic(this, &AEnemySpawnController::HandleGameStateChanged);
 	}
 
+	PopulateSpawnLocations();
 	SetSpawnData();
 	StartSpawn();
 }
@@ -146,6 +147,29 @@ bool AEnemySpawnController::SpawnEnemy(TSubclassOf<AEnemyPawn> EnemyClass)
 
 	NewEnemy->FinishSpawning(SpawnTransform);
 	return true;
+}
+
+void AEnemySpawnController::PopulateSpawnLocations()
+{
+	TArray<AActor*> AttachedActors;
+	GetAttachedActors(AttachedActors, false);
+
+	if (AttachedActors.IsEmpty())
+	{
+		return;
+	}
+
+	SpawnLocations.Empty();
+	
+	for (const auto Actor : AttachedActors)
+	{
+		if (!IsValid(Actor))
+		{
+			continue;
+		}
+
+		SpawnLocations.Add(Actor->GetActorLocation());
+	}
 }
 
 void AEnemySpawnController::HandleEnemyDeath(UHitPointsComponent* Component)

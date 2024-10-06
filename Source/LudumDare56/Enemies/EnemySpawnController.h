@@ -48,15 +48,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UDataTable* EnemySpawnDataTable = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TArray<FVector> SpawnLocations;
-
 	UFUNCTION(BlueprintCallable)
 	void StopSpawn();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<FEnemySpawnData> SpawnData;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<FVector> SpawnLocations;
 
 	UPROPERTY()
 	int32 CurrentLevel = 0;
@@ -72,6 +72,9 @@ protected:
 
 	UFUNCTION()
 	bool SpawnEnemy(TSubclassOf<AEnemyPawn> EnemyClass);
+
+	UFUNCTION(BlueprintCallable)
+	void PopulateSpawnLocations();
 
 	UFUNCTION()
 	void HandleEnemyDeath(UHitPointsComponent* Component);
