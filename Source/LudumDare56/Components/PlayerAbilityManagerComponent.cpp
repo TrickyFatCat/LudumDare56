@@ -3,12 +3,16 @@
 
 #include "PlayerAbilityManagerComponent.h"
 
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "LudumDare56/Player/Abilities/PlayerAbility.h"
 
 
 UPlayerAbilityManagerComponent::UPlayerAbilityManagerComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = false;
 	bWantsInitializeComponent = true;
 }
 
@@ -39,6 +43,43 @@ void UPlayerAbilityManagerComponent::InitializeComponent()
 void UPlayerAbilityManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	PlayerCameraManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
+}
+
+
+void UPlayerAbilityManagerComponent::TickComponent(float DeltaTime,
+                                                   enum ELevelTick TickType,
+                                                   FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (IsValid(SelectedAbility) && IsValid(PlayerPawn) && IsValid(PlayerCameraManager) && IsValid(PlayerController))
+	{
+		FVector Location, Direction, Intersection;
+		if (PlayerController->DeprojectMousePositionToWorld(Location, Direction))
+		{
+			const FVector LineStart = PlayerCameraManager->GetCameraLocation();
+			FVector LineEnd = Location + Direction * 20000.f;
+			float T = 0.f;;
+			UKismetMathLibrary::LinePlaneIntersection_OriginNormal(LineStart,
+			                                                       LineEnd,
+			                                                       FVector::ZeroVector,
+			                                                       FVector::UpVector,
+			                                                       T,
+			                                                       Intersection);
+			Intersection.Z = 0.f;
+
+			if (FVector::DistSquared(Intersection, PlayerPawn->GetActorLocation()) > AimRadius * AimRadius)
+			{
+				Intersection = Intersection.GetClampedToSize(-AimRadius, AimRadius);
+			}
+			
+			SelectedAbility->SetActorLocation(Intersection);
+		}
+	}
 }
 
 bool UPlayerAbilityManagerComponent::SelectAbility(TSubclassOf<APlayerAbility> Ability)
@@ -50,15 +91,19 @@ bool UPlayerAbilityManagerComponent::SelectAbility(TSubclassOf<APlayerAbility> A
 
 	if (IsValid(SelectedAbility))
 	{
-		DeselectAbility(SelectedAbility->StaticClass());
+		DeselectAbility(SelectedAbility->GetClass());
+
+		if (SelectedAbility->IsA(Ability))
+		{
+			SelectedAbility = nullptr;
+			SetComponentTickEnabled(false);
+			return false;
+		}
 	}
 
-	if (!SelectedAbility->IsA(Ability))
-	{
-		SelectedAbility = GetAbilityByClass(Ability);
-		OnAbilityDeselected.Broadcast(this, SelectedAbility);
-	}
-
+	SelectedAbility = GetAbilityByClass(Ability);
+	SetComponentTickEnabled(true);
+	OnAbilitySelected.Broadcast(this, SelectedAbility);
 	return true;
 }
 
@@ -74,18 +119,23 @@ bool UPlayerAbilityManagerComponent::DeselectAbility(TSubclassOf<APlayerAbility>
 	return true;
 }
 
-bool UPlayerAbilityManagerComponent::UseSelectedAbility(const FVector& Location)
+bool UPlayerAbilityManagerComponent::UseSelectedAbility()
 {
 	if (!IsValid(SelectedAbility))
 	{
 		return false;
 	}
 
-	return SelectedAbility->UseAbility(Location);
+	return SelectedAbility->UseAbility();
 }
 
 APlayerAbility* UPlayerAbilityManagerComponent::GetAbilityByClass(TSubclassOf<APlayerAbility> Ability)
 {
+	if (Abilities.IsEmpty())
+	{
+		return nullptr;
+	}
+
 	auto Predicate = [&](const APlayerAbility* AbilityActor)
 	{
 		return AbilityActor->GetClass() == Ability;

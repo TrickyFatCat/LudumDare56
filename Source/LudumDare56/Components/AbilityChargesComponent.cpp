@@ -23,6 +23,7 @@ bool UAbilityChargesComponent::DecreaseCharges()
 	}
 
 	CurrentCharges -= 1;
+	StartRestoreTimer();
 	OnChargesChanged.Broadcast(this, CurrentCharges);
 	return true;
 }
