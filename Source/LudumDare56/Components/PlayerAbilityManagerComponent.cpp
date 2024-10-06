@@ -50,13 +50,19 @@ bool UPlayerAbilityManagerComponent::SelectAbility(TSubclassOf<APlayerAbility> A
 
 	if (IsValid(SelectedAbility))
 	{
-		DeselectAbility(SelectedAbility->StaticClass());
-	}
+		DeselectAbility(SelectedAbility->GetClass());
 
-	if (!SelectedAbility->IsA(Ability))
+		if (SelectedAbility->IsA(Ability))
+		{
+			SelectedAbility = nullptr;
+			return false;
+		}
+	}
+	
+	if (!IsValid(SelectedAbility) || !SelectedAbility->IsA(Ability))
 	{
 		SelectedAbility = GetAbilityByClass(Ability);
-		OnAbilityDeselected.Broadcast(this, SelectedAbility);
+		OnAbilitySelected.Broadcast(this, SelectedAbility);
 	}
 
 	return true;
