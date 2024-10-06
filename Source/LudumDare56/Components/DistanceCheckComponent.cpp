@@ -50,5 +50,5 @@ void UDistanceCheckComponent::TickComponent(float DeltaTime,
 bool UDistanceCheckComponent::CheckIsInRange() const
 {
 	const float CurrentDistance = FVector::DistSquared(TargetLocation, GetOwner()->GetActorLocation());
-	return CurrentDistance <= TargetDistance;
+	return CurrentDistance <= TargetDistance * TargetDistance;
 }
