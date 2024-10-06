@@ -23,6 +23,18 @@ void UHitPointsRegenerationComponent::InitializeComponent()
 	}
 }
 
+void UHitPointsRegenerationComponent::SetRegenerationRate(const float Value)
+{
+	if (Value <= 0.f)
+	{
+		return;
+	}
+
+	StopRegeneration();
+	RegenerationRate = Value;
+	StartRegeneration();
+}
+
 void UHitPointsRegenerationComponent::StartRegeneration()
 {
 	if (!IsActive())

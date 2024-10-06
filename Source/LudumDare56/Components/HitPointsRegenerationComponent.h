@@ -19,14 +19,17 @@ public:
 
 protected:
 	virtual void InitializeComponent() override;
-	
+
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	float DefaultRegenerationRate = 10.f;
-	
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	int32 DefaultRegenerationPower = 1;
-	
+
+	UFUNCTION(BlueprintCallable)
+	void SetRegenerationRate(const float Value);
+
 protected:
 	UPROPERTY()
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
@@ -52,5 +55,3 @@ protected:
 	UFUNCTION()
 	void HandleZeroHitPoints();
 };
-
-
