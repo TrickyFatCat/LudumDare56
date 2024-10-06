@@ -46,8 +46,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool UseSelectedAbility(const FVector& Location);
 
+	UFUNCTION(BlueprintGetter)
+	APlayerAbility* GetSelectedAbility() const { return SelectedAbility; }
+
 	UFUNCTION(BlueprintPure)
 	APlayerAbility* GetAbilityByClass(TSubclassOf<APlayerAbility> Ability);
+
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
@@ -56,6 +60,6 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 	TArray<APlayerAbility*> Abilities;
 
-	UPROPERTY(VisibleInstanceOnly)
+	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetSelectedAbility)
 	APlayerAbility* SelectedAbility = nullptr;
 };
