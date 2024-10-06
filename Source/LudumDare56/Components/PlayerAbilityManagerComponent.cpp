@@ -58,13 +58,9 @@ bool UPlayerAbilityManagerComponent::SelectAbility(TSubclassOf<APlayerAbility> A
 			return false;
 		}
 	}
-	
-	if (!IsValid(SelectedAbility) || !SelectedAbility->IsA(Ability))
-	{
-		SelectedAbility = GetAbilityByClass(Ability);
-		OnAbilitySelected.Broadcast(this, SelectedAbility);
-	}
 
+	SelectedAbility = GetAbilityByClass(Ability);
+	OnAbilitySelected.Broadcast(this, SelectedAbility);
 	return true;
 }
 
@@ -92,6 +88,11 @@ bool UPlayerAbilityManagerComponent::UseSelectedAbility()
 
 APlayerAbility* UPlayerAbilityManagerComponent::GetAbilityByClass(TSubclassOf<APlayerAbility> Ability)
 {
+	if (Abilities.IsEmpty())
+	{
+		return nullptr;
+	}
+	
 	auto Predicate = [&](const APlayerAbility* AbilityActor)
 	{
 		return AbilityActor->GetClass() == Ability;
