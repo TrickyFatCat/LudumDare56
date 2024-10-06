@@ -54,10 +54,11 @@ void UPlayerLevelComponent::IncreaseLevel()
 
 void UPlayerLevelComponent::CalculateRequiredExperience()
 {
-	if (!IsValid(ExperienceCurve))
+
+	if(!ExperienceTable.IsValid())
 	{
 		return;
 	}
-
-	RequiredExperience = static_cast<int32>(ExperienceCurve->GetFloatValue(CurrentLevel));
+	
+	RequiredExperience = ExperienceTable.GetValueAtLevel(CurrentLevel);
 }

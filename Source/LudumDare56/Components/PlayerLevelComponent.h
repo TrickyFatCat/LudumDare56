@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ScalableFloat.h"
 #include "Components/ActorComponent.h"
 #include "PlayerLevelComponent.generated.h"
 
@@ -33,8 +34,8 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnCurrentExperienceIncreasedDynamicSignature OnCurrentExperienceIncreased;
 
-	UPROPERTY(EditDefaultsOnly)
-	UCurveFloat* ExperienceCurve = nullptr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat ExperienceTable;
 	
 	UFUNCTION(BlueprintCallable)
 	bool IncreaseExperience(const int32 Amount);
