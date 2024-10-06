@@ -26,20 +26,20 @@ void APlayerAbility::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-bool APlayerAbility::UseAbility()
+bool APlayerAbility::UseAbility(const FVector& Location)
 {
 	if (!AbilityChargesComponent->HasCharges())
 	{
 		return false;
 	}
 
-	if (ActivateAbilityEffect())
+	if (ActivateAbilityEffect(Location))
 	{
 		AbilityChargesComponent->DecreaseCharges();
 	}
 }
 
-bool APlayerAbility::ActivateAbilityEffect_Implementation()
+bool APlayerAbility::ActivateAbilityEffect_Implementation(const FVector& Location)
 {
 	return true;
 }

@@ -44,7 +44,7 @@ public:
 	bool DeselectAbility(TSubclassOf<APlayerAbility> Ability);
 
 	UFUNCTION(BlueprintCallable)
-	bool UseSelectedAbility();
+	bool UseSelectedAbility(const FVector& Location);
 
 	UFUNCTION(BlueprintPure)
 	APlayerAbility* GetAbilityByClass(TSubclassOf<APlayerAbility> Ability);

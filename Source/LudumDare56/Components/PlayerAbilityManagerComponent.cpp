@@ -71,14 +71,14 @@ bool UPlayerAbilityManagerComponent::DeselectAbility(TSubclassOf<APlayerAbility>
 	return true;
 }
 
-bool UPlayerAbilityManagerComponent::UseSelectedAbility()
+bool UPlayerAbilityManagerComponent::UseSelectedAbility(const FVector& Location)
 {
 	if (!IsValid(SelectedAbility))
 	{
 		return false;
 	}
 
-	return SelectedAbility->UseAbility();
+	return SelectedAbility->UseAbility(Location);
 }
 
 APlayerAbility* UPlayerAbilityManagerComponent::GetAbilityByClass(TSubclassOf<APlayerAbility> Ability)
