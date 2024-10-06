@@ -236,6 +236,14 @@
 				"Mac",
 				"Linux"
 			]
+		},
+		{
+			"Name": "TrickyGameMode",
+			"Enabled": true
+		},
+		{
+			"Name": "TrickyUserInterface",
+			"Enabled": true
 		}
 	]
 }
