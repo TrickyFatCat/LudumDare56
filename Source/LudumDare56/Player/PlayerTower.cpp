@@ -6,6 +6,7 @@
 #include "TrickyGameModeBase.h"
 #include "TrickyGameModeLibrary.h"
 #include "LudumDare56/Components/HitPointsComponent.h"
+#include "LudumDare56/Components/HitPointsRegenerationComponent.h"
 #include "LudumDare56/Components/PlayerLevelComponent.h"
 
 
@@ -15,6 +16,7 @@ APlayerTower::APlayerTower()
 
 	HitPointsComponent = CreateDefaultSubobject<UHitPointsComponent>(TEXT("HitPoints"));
 	PlayerLevelComponent = CreateDefaultSubobject<UPlayerLevelComponent>(TEXT("PlayerLevel"));
+	HitPointsRegenerationComponent = CreateDefaultSubobject<UHitPointsRegenerationComponent>(TEXT("HitPointsRegeneration"));
 }
 
 void APlayerTower::BeginPlay()
