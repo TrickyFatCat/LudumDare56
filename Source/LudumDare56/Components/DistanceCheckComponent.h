@@ -20,11 +20,11 @@ class LUDUMDARE56_API UDistanceCheckComponent : public UActorComponent
 public:
 	UDistanceCheckComponent();
 
-protected:
 	virtual void Activate(bool bReset) override;
 
 	virtual void Deactivate() override;
 
+protected:
 	virtual void InitializeComponent() override;
 
 public:
