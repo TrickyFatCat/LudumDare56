@@ -47,7 +47,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float RestoreDuration = 2.f;
 
-	UPROPERTY(Blueprintgetter=GetRestorTimerHandle)
+	UPROPERTY(Blueprintgetter=GetRestoreTimer)
 	FTimerHandle RestoreTimerHandle;
 
 	UFUNCTION()
