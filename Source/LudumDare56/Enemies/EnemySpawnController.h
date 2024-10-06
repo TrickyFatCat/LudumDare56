@@ -7,6 +7,7 @@
 #include "ScalableFloat.h"
 #include "EnemySpawnController.generated.h"
 
+enum class EGameModeState : uint8;
 class UPlayerLevelComponent;
 class UHitPointsComponent;
 class AEnemyPawn;
@@ -74,4 +75,7 @@ protected:
 
 	UFUNCTION()
 	void HandlePlayerLevelIncreased(UPlayerLevelComponent* Component, int32 NewLevel);
+
+	UFUNCTION()
+	void HandleGameStateChanged(EGameModeState NewState);
 };

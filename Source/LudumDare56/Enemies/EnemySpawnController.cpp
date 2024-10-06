@@ -4,6 +4,8 @@
 #include "EnemySpawnController.h"
 
 #include "EnemyPawn.h"
+#include "TrickyGameModeBase.h"
+#include "TrickyGameModeLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "LudumDare56/Components/HitPointsComponent.h"
 #include "LudumDare56/Components/PlayerLevelComponent.h"
@@ -29,6 +31,13 @@ void AEnemySpawnController::BeginPlay()
 			PlayerLevelComponent->OnLevelIncreased.AddUniqueDynamic(this,
 			                                                        &AEnemySpawnController::HandlePlayerLevelIncreased);
 		}
+	}
+
+	ATrickyGameModeBase* GameMode = UTrickyGameModeLibrary::GetTrickyGameMode(this);
+
+	if (IsValid(GameMode))
+	{
+		GameMode->OnStateChanged.AddUniqueDynamic(this, &AEnemySpawnController::HandleGameStateChanged);
 	}
 	
 	SetSpawnData();
@@ -151,4 +160,12 @@ void AEnemySpawnController::HandleEnemyDeath(UHitPointsComponent* Component)
 void AEnemySpawnController::HandlePlayerLevelIncreased(UPlayerLevelComponent* Component, int32 NewLevel)
 {
 	CurrentLevel = NewLevel;
+}
+
+void AEnemySpawnController::HandleGameStateChanged(EGameModeState NewState)
+{
+	if (NewState == EGameModeState::Lose || NewState == EGameModeState::Win)
+	{
+		StopSpawn();
+	}
 }
