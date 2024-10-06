@@ -48,6 +48,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UDataTable* EnemySpawnDataTable = nullptr;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TArray<FVector> SpawnLocations;
+
 	UFUNCTION(BlueprintCallable)
 	void StopSpawn();
 

@@ -39,7 +39,7 @@ void AEnemySpawnController::BeginPlay()
 	{
 		GameMode->OnStateChanged.AddUniqueDynamic(this, &AEnemySpawnController::HandleGameStateChanged);
 	}
-	
+
 	SetSpawnData();
 	StartSpawn();
 }
@@ -131,7 +131,10 @@ bool AEnemySpawnController::SpawnEnemy(TSubclassOf<AEnemyPawn> EnemyClass)
 	}
 
 	FTransform SpawnTransform = FTransform::Identity;
-	SpawnTransform.SetLocation(GetActorLocation());
+	const FVector SpawnLocation = SpawnLocations.IsEmpty()
+		                              ? GetActorLocation()
+		                              : SpawnLocations[FMath::RandRange(0, SpawnLocations.Num() - 1)];
+	SpawnTransform.SetLocation(SpawnLocation);
 
 	AEnemyPawn* NewEnemy = GetWorld()->SpawnActorDeferred<AEnemyPawn>(EnemyClass, SpawnTransform);
 	UHitPointsComponent* HitPointsComponent = NewEnemy->GetComponentByClass<UHitPointsComponent>();
