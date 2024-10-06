@@ -25,11 +25,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool UseAbility();
 
+	UFUNCTION(BlueprintGetter)
+	UAbilityChargesComponent* GetAbilityChargesComponent() const { return AbilityChargesComponent; }
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> Root = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintGetter=GetAbilityChargesComponent)
 	TObjectPtr<UAbilityChargesComponent> AbilityChargesComponent = nullptr;
 
 	UFUNCTION(BlueprintNativeEvent)
