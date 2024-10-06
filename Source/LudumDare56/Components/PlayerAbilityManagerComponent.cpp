@@ -78,7 +78,7 @@ bool UPlayerAbilityManagerComponent::UseSelectedAbility()
 		return false;
 	}
 
-	return true;
+	return SelectedAbility->UseAbility();
 }
 
 APlayerAbility* UPlayerAbilityManagerComponent::GetAbilityByClass(TSubclassOf<APlayerAbility> Ability)

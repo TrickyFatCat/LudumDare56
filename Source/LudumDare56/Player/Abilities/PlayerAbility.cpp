@@ -3,6 +3,8 @@
 
 #include "PlayerAbility.h"
 
+#include "LudumDare56/Components/AbilityChargesComponent.h"
+
 
 APlayerAbility::APlayerAbility()
 {
@@ -10,12 +12,13 @@ APlayerAbility::APlayerAbility()
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(Root);
+
+	AbilityChargesComponent = CreateDefaultSubobject<UAbilityChargesComponent>(TEXT("AbilityCharges"));
 }
 
 void APlayerAbility::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void APlayerAbility::Tick(float DeltaTime)
@@ -23,3 +26,20 @@ void APlayerAbility::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+bool APlayerAbility::UseAbility()
+{
+	if (!AbilityChargesComponent->HasCharges())
+	{
+		return false;
+	}
+
+	if (ActivateAbilityEffect())
+	{
+		AbilityChargesComponent->DecreaseCharges();
+	}
+}
+
+bool APlayerAbility::ActivateAbilityEffect_Implementation()
+{
+	return true;
+}

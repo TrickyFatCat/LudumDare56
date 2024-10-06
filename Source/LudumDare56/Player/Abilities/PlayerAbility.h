@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "PlayerAbility.generated.h"
 
+class UAbilityChargesComponent;
+
 UCLASS()
 class LUDUMDARE56_API APlayerAbility : public AActor
 {
@@ -20,7 +22,18 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	bool UseAbility();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> Root = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UAbilityChargesComponent> AbilityChargesComponent = nullptr;
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool ActivateAbilityEffect();
+
+	virtual bool ActivateAbilityEffect_Implementation();
 };
