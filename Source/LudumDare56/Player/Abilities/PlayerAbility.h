@@ -23,7 +23,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-	bool UseAbility(const FVector& Location);
+	bool UseAbility();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -33,7 +33,7 @@ protected:
 	TObjectPtr<UAbilityChargesComponent> AbilityChargesComponent = nullptr;
 
 	UFUNCTION(BlueprintNativeEvent)
-	bool ActivateAbilityEffect(const FVector& Location);
+	bool ActivateAbilityEffect();
 
 	
 };
