@@ -52,12 +52,8 @@ bool UPlayerAbilityManagerComponent::SelectAbility(TSubclassOf<APlayerAbility> A
 
 	if (!SelectedAbility->IsA(Ability))
 	{
-		auto Predicate = [&](const APlayerAbility* AbilityActor)
-		{
-			return AbilityActor->GetClass() == Ability;
-		};
-
-		SelectedAbility = *Abilities.FindByPredicate(Predicate);
+		SelectedAbility = GetAbilityByClass(Ability);
+		OnAbilityDeselected.Broadcast(this, SelectedAbility);
 	}
 
 	return true;
@@ -70,6 +66,8 @@ bool UPlayerAbilityManagerComponent::DeselectAbility(TSubclassOf<APlayerAbility>
 		return false;
 	}
 
+	APlayerAbility* DeselectedAbility = GetAbilityByClass(Ability);
+	OnAbilityDeselected.Broadcast(this, DeselectedAbility);
 	return true;
 }
 
@@ -81,4 +79,13 @@ bool UPlayerAbilityManagerComponent::UseSelectedAbility()
 	}
 
 	return true;
+}
+
+APlayerAbility* UPlayerAbilityManagerComponent::GetAbilityByClass(TSubclassOf<APlayerAbility> Ability)
+{
+	auto Predicate = [&](const APlayerAbility* AbilityActor)
+	{
+		return AbilityActor->GetClass() == Ability;
+	};
+	return *Abilities.FindByPredicate(Predicate);
 }

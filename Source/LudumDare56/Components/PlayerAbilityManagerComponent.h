@@ -9,6 +9,14 @@
 
 class APlayerAbility;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAbilitySelectedDynamicSignature,
+                                             UPlayerAbilityManagerComponent*, Component,
+                                             APlayerAbility*, Ability);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAbilityDeselectedDynamicSignature,
+                                             UPlayerAbilityManagerComponent*, Component,
+                                             APlayerAbility*, Ability);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class LUDUMDARE56_API UPlayerAbilityManagerComponent : public UActorComponent
 {
@@ -23,6 +31,12 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UPROPERTY(BlueprintAssignable)
+	FOnAbilitySelectedDynamicSignature OnAbilitySelected;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAbilityDeselectedDynamicSignature OnAbilityDeselected;
+	
 	UFUNCTION(BlueprintCallable)
 	bool SelectAbility(TSubclassOf<APlayerAbility> Ability);
 
@@ -31,6 +45,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool UseSelectedAbility();
+
+	UFUNCTION(BlueprintPure)
+	APlayerAbility* GetAbilityByClass(TSubclassOf<APlayerAbility> Ability);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
