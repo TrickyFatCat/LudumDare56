@@ -46,6 +46,9 @@ protected:
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float BeginPlaySpawnDelay = 3.f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UDataTable* EnemySpawnDataTable = nullptr;
 
 	UFUNCTION(BlueprintCallable)

@@ -42,7 +42,9 @@ void AEnemySpawnController::BeginPlay()
 
 	PopulateSpawnLocations();
 	SetSpawnData();
-	StartSpawn();
+
+	FTimerHandle BeginPlayDelayTimerHandle;
+	GetWorldTimerManager().SetTimer(BeginPlayDelayTimerHandle, this, &AEnemySpawnController::StartSpawn, BeginPlaySpawnDelay);
 }
 
 void AEnemySpawnController::StopSpawn()
