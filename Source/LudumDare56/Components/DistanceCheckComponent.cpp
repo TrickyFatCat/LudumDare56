@@ -21,6 +21,7 @@ void UDistanceCheckComponent::Deactivate()
 {
 	Super::Deactivate();
 	SetComponentTickEnabled(false);
+	bIsInRange = false;
 }
 
 void UDistanceCheckComponent::InitializeComponent()
@@ -35,12 +36,12 @@ void UDistanceCheckComponent::TickComponent(float DeltaTime,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	const bool bHasReachedTargetDistance = CheckIsInRange();
 	
-	if (bHasReachedTargetDistance > TargetDistance && bIsInRange)
+	if (bHasReachedTargetDistance && bIsInRange)
 	{
 		bIsInRange = false;
 		OnExitTargetRange.Broadcast(this);
 	}
-	else if (bHasReachedTargetDistance <= TargetDistance && !bIsInRange)
+	else if (bHasReachedTargetDistance && !bIsInRange)
 	{
 		bIsInRange = true;
 		OnEnterTargetRange.Broadcast(this);
