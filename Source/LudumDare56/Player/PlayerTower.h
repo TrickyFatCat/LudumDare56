@@ -6,8 +6,10 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerTower.generated.h"
 
+class UPlayerAbilityManagerComponent;
 class UPlayerLevelComponent;
 class UHitPointsComponent;
+class UHitPointsRegenerationComponent;
 
 UCLASS()
 class LUDUMDARE56_API APlayerTower : public APawn
@@ -31,6 +33,12 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Components)
 	TObjectPtr<UPlayerLevelComponent> PlayerLevelComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Components)
+	TObjectPtr<UHitPointsRegenerationComponent> HitPointsRegenerationComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Components)
+	TObjectPtr<UPlayerAbilityManagerComponent> PlayerAbilityManagerComponent = nullptr;
 
 private:
 	UFUNCTION()
