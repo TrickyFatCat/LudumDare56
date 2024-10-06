@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "EnemyPawn.generated.h"
 
+class UDistanceCheckComponent;
 class UEnemyAttackComponent;
 class UEnemyDataHandler;
 class UEnemyDeathComponent;
@@ -65,6 +66,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<UEnemyAttackComponent> EnemyAttackComponent = nullptr;
 
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	TObjectPtr<UDistanceCheckComponent> DistanceCheckComponent = nullptr;
+
 private:
 	UFUNCTION()
 	void HandleEnemyStateChanged(UEnemyStateControllerComponent* Component, EEnemyState NewState);
@@ -79,4 +83,10 @@ private:
 
 	UFUNCTION()
 	void HandleZeroHitPoints(UHitPointsComponent* Component);
+
+	UFUNCTION()
+	void HandleEnterAttackRange(UDistanceCheckComponent* Component);
+	
+	UFUNCTION()
+	void HandleExitAttackRange(UDistanceCheckComponent* Component);
 };

@@ -3,9 +3,11 @@
 
 #include "EnemyPawn.h"
 
+#include "NativeGameplayTags.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "LudumDare56/Components/DistanceCheckComponent.h"
 #include "LudumDare56/Components/EnemyAttackComponent.h"
 #include "LudumDare56/Components/EnemyDataHandler.h"
 #include "LudumDare56/Components/EnemyDeathComponent.h"
@@ -36,25 +38,33 @@ AEnemyPawn::AEnemyPawn()
 	EnemyDeathComponent = CreateDefaultSubobject<UEnemyDeathComponent>(TEXT("DeathComponent"));
 	EnemyDataHandler = CreateDefaultSubobject<UEnemyDataHandler>(TEXT("DataHandler"));
 	EnemyAttackComponent = CreateDefaultSubobject<UEnemyAttackComponent>(TEXT("EnemyAttack"));
+	DistanceCheckComponent = CreateDefaultSubobject<UDistanceCheckComponent>(TEXT("DistanceCheck"));
 }
 
 void AEnemyPawn::BeginPlay()
 {
-	const FVector PlayerLocation = UGameplayStatics::GetPlayerPawn(this, 0)->GetActorLocation();
+	const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+
+	const FVector PlayerLocation = PlayerPawn->GetActorLocation();
 	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), PlayerLocation);
 	NewRotation.Pitch = 0.f;
 	NewRotation.Roll = 0.f;
 	SetActorRotation(NewRotation);
-	EnemyStateControllerComponent->EnterIdleState();
+
+	DistanceCheckComponent->TargetLocation = PlayerLocation;
+	DistanceCheckComponent->TargetDistance = EnemyAttackComponent->Range;
+	DistanceCheckComponent->OnEnterTargetRange.AddUniqueDynamic(this, &AEnemyPawn::HandleEnterAttackRange);
+	DistanceCheckComponent->OnExitTargetRange.AddUniqueDynamic(this, &AEnemyPawn::HandleExitAttackRange);
 	
 	OnTakeAnyDamage.AddUniqueDynamic(this, &AEnemyPawn::HandleAnyDamageTaken);
-	
+
 	if (IsValid(HitPointsComponent))
 	{
 		HitPointsComponent->OnZeroHitPoints.AddUniqueDynamic(this, &AEnemyPawn::HandleZeroHitPoints);
 	}
 
 	EnemyStateControllerComponent->OnStateChanged.AddUniqueDynamic(this, &AEnemyPawn::HandleEnemyStateChanged);
+	EnemyStateControllerComponent->EnterChaseState();
 	Super::BeginPlay();
 }
 
@@ -64,23 +74,29 @@ void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Compone
 	{
 	case EEnemyState::Idle:
 		SkeletalMeshComponent->PlayAnimation(IdleMontage, true);
+		DistanceCheckComponent->Activate(false);
 		break;
-		
+
 	case EEnemyState::Chase:
 		EnemyMovementComponent->Activate(false);
+		DistanceCheckComponent->Activate(false);
 		SkeletalMeshComponent->PlayAnimation(MovementMontage, true);
 		break;
 
 	case EEnemyState::Attack:
+		DistanceCheckComponent->Deactivate();
+		EnemyMovementComponent->Deactivate();
 		EnemyAttackComponent->StartAttack();
 		break;
 
 	case EEnemyState::Death:
+		DistanceCheckComponent->Deactivate();
 		EnemyMovementComponent->Deactivate();
 		EnemyDeathComponent->StartDeathSequence();
 		break;
 
 	default:
+		DistanceCheckComponent->Deactivate();
 		EnemyMovementComponent->Deactivate();
 		break;
 	}
@@ -99,4 +115,14 @@ void AEnemyPawn::HandleZeroHitPoints(UHitPointsComponent* Component)
 {
 	EnemyStateControllerComponent->EnterDeathState();
 	EnemyExperienceComponent->GiveExperience();
+}
+
+void AEnemyPawn::HandleEnterAttackRange(UDistanceCheckComponent* Component)
+{
+	EnemyStateControllerComponent->EnterAttackState();
+}
+
+void AEnemyPawn::HandleExitAttackRange(UDistanceCheckComponent* Component)
+{
+	EnemyStateControllerComponent->EnterChaseState();
 }
