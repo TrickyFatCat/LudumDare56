@@ -29,13 +29,16 @@ public:
 	bool DecreaseCharges();
 
 	UFUNCTION(BlueprintGetter)
+	int32 GetCurrentCharges() const { return CurrentCharges; }
+	
+	UFUNCTION(BlueprintGetter)
 	FTimerHandle GetRestoreTimer() const { return RestoreTimerHandle; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 MaxCharges = 2;
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetCurrentCharges)
 	int32 CurrentCharges = 2;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
