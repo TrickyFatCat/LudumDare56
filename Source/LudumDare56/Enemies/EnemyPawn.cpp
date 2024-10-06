@@ -3,7 +3,6 @@
 
 #include "EnemyPawn.h"
 
-#include "NativeGameplayTags.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
