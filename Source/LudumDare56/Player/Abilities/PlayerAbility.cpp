@@ -36,7 +36,10 @@ bool APlayerAbility::UseAbility(const FVector& Location)
 	if (ActivateAbilityEffect(Location))
 	{
 		AbilityChargesComponent->DecreaseCharges();
+		return true;
 	}
+
+	return false;
 }
 
 bool APlayerAbility::ActivateAbilityEffect_Implementation(const FVector& Location)
