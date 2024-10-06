@@ -48,7 +48,10 @@ bool UPlayerAbilityManagerComponent::SelectAbility(TSubclassOf<APlayerAbility> A
 		return false;
 	}
 
-	DeselectAbility(Ability);
+	if (IsValid(SelectedAbility))
+	{
+		DeselectAbility(SelectedAbility->StaticClass());
+	}
 
 	if (!SelectedAbility->IsA(Ability))
 	{
