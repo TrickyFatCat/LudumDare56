@@ -45,6 +45,7 @@ void ATrickyPlayerControllerBase::HandleGameStateChange_Implementation(EGameMode
 
 	case EGameModeState::Lose:
 	case EGameModeState::Win:
+	case EGameModeState::Upgrade:
 		ToggleInput(false, true, FInputModeUIOnly());
 		StopMovement();
 		break;
