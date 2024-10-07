@@ -43,21 +43,28 @@ void UPlayerAbilityUpgradeComponent::ChooseCurrentUpgrades()
 		return;
 	}
 
-	int32 Index = 0;
+	PreviousUpgradesIndexes.Empty();
+	PreviousUpgradesIndexes = CurrentUpgradesIndexes;
 	
+	const int32 MaxTries = 10;
+	int32 Index = 0;
+
 	for (int32 i = 0; i < UpgradesPerLevel; i++)
 	{
-		do
+		for (int32 j = 0; j < MaxTries; j++)
 		{
-			Index = FMath::RandHelper(UpgradesData.Num() - 1);
+			Index = FMath::RandRange(0, UpgradesData.Num() - 1);
+
+			if (!PreviousUpgradesIndexes.Contains(Index) && !NewUpgradesIndexes.Contains(Index))
+			{
+				break;
+			}
 		}
-		while (PreviousUpgradesIndexes.Contains(Index) || NewUpgradesIndexes.Contains(Index));
 
 		NewUpgradesIndexes.Add(Index);
 	}
-	
-	PreviousUpgradesIndexes.Empty();
-	PreviousUpgradesIndexes = CurrentUpgradesIndexes;
+
+
 	CurrentUpgradesIndexes.Empty();
 	CurrentUpgradesIndexes = NewUpgradesIndexes;
 }

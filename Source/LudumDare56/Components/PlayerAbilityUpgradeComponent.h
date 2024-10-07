@@ -77,10 +77,10 @@ protected:
 	TArray<FAbilityUpgradeData> UpgradesData;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetCurrentUpgradesIndexes)
-	TArray<int32> CurrentUpgradesIndexes;
+	TArray<int32> CurrentUpgradesIndexes = {0, 0, 0};
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
-	TArray<int32> PreviousUpgradesIndexes;
+	TArray<int32> PreviousUpgradesIndexes = {0, 0, 0};
 
 private:
 	UFUNCTION()
