@@ -36,6 +36,7 @@ bool UAbilityChargesComponent::IncreaseMaxCharges(const int32 Amount)
 	}
 
 	MaxCharges += Amount;
+	StartRestoreTimer();
 	return true;
 }
 
