@@ -16,14 +16,14 @@ void UHitPointsRegenerationComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
+	RegenerationRate = DefaultRegenerationRate;
+	RegenerationPower = DefaultRegenerationPower;
+	
 	if (GetWorld()->IsGameWorld())
 	{
 		HitPointsComponent = GetOwner()->GetComponentByClass<UHitPointsComponent>();
 		StartRegeneration();
 	}
-
-	RegenerationRate = DefaultRegenerationRate;
-	RegenerationPower = DefaultRegenerationPower;
 }
 
 void UHitPointsRegenerationComponent::SetRegenerationRate(const float Value)
@@ -54,7 +54,7 @@ void UHitPointsRegenerationComponent::StartRegeneration()
 {
 	if (!IsActive())
 	{
-		return;
+		Activate();
 	}
 
 	const float RegenerationDelay = RegenerationRate <= 0.f ? 1.f : 1.f / RegenerationRate;
