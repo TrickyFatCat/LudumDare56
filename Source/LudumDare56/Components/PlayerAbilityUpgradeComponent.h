@@ -21,13 +21,17 @@ struct FAbilityUpgradeData : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Name = FText::FromString(TEXT("Ability Name"));
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Description = FText::FromString(TEXT("Ability Description"));
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D* Icon = nullptr;
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpgradeActivatedDynamicSignature,
+                                             UPlayerAbilityUpgradeComponent*, Component,
+                                             UAbilityUpgrade*, Upgrade);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class LUDUMDARE56_API UPlayerAbilityUpgradeComponent : public UActorComponent
@@ -41,11 +45,23 @@ protected:
 	virtual void InitializeComponent() override;
 
 public:
+	UPROPERTY(BlueprintAssignable)
+	FOnUpgradeActivatedDynamicSignature OnUpgradeActivated;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UDataTable* UpgradesDataTable = nullptr;
 
+	UFUNCTION(BlueprintCallable)
+	void ChooseCurrentUpgrades();
+
+	UFUNCTION(BlueprintCallable)
+	bool ActivateUpgradeByIndex(const int32 Index);
+
 	UFUNCTION(BlueprintGetter)
 	TArray<FAbilityUpgradeData> GetUpgradesData() const { return UpgradesData; }
+
+	UFUNCTION(BlueprintGetter)
+	TArray<int32> GetCurrentUpgradesIndexes() const { return CurrentUpgradesIndexes; }
 
 	UFUNCTION(BlueprintPure)
 	bool GetAbilityUpgradeDataByClass(TSubclassOf<UAbilityUpgrade> UpgradeClass, FAbilityUpgradeData& OutData) const;
@@ -54,8 +70,17 @@ public:
 	bool GetAbilityUpgradeDataByObject(UAbilityUpgrade* UpgradeObject, FAbilityUpgradeData& OutData) const;
 
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(ClampMin="2", ClampMax="5"))
+	int32 UpgradesPerLevel = 3;
+
 	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetUpgradesData)
 	TArray<FAbilityUpgradeData> UpgradesData;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetCurrentUpgradesIndexes)
+	TArray<int32> CurrentUpgradesIndexes;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+	TArray<int32> PreviousUpgradesIndexes;
 
 private:
 	UFUNCTION()
@@ -64,5 +89,3 @@ private:
 	UFUNCTION()
 	void CreateUpgradesObjects();
 };
-
-

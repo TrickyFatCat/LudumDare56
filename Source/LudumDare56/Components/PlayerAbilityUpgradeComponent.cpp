@@ -24,6 +24,57 @@ void UPlayerAbilityUpgradeComponent::InitializeComponent()
 	}
 }
 
+void UPlayerAbilityUpgradeComponent::ChooseCurrentUpgrades()
+{
+	if (UpgradesData.IsEmpty())
+	{
+		return;
+	}
+
+	TArray<int32> NewUpgradesIndexes;
+
+	if (UpgradesData.Num() <= UpgradesPerLevel)
+	{
+		for (int32 i = 0; i < UpgradesData.Num(); i++)
+		{
+			NewUpgradesIndexes.Add(i);
+		}
+
+		return;
+	}
+
+	int32 Index = 0;
+	
+	for (int32 i = 0; i < UpgradesPerLevel; i++)
+	{
+		do
+		{
+			Index = FMath::RandHelper(UpgradesData.Num() - 1);
+		}
+		while (PreviousUpgradesIndexes.Contains(Index) || NewUpgradesIndexes.Contains(Index));
+
+		NewUpgradesIndexes.Add(Index);
+	}
+	
+	PreviousUpgradesIndexes.Empty();
+	PreviousUpgradesIndexes = CurrentUpgradesIndexes;
+	CurrentUpgradesIndexes.Empty();
+	CurrentUpgradesIndexes = NewUpgradesIndexes;
+}
+
+bool UPlayerAbilityUpgradeComponent::ActivateUpgradeByIndex(const int32 Index)
+{
+	if (UpgradesData.IsEmpty() || !UpgradesData.IsValidIndex(Index))
+	{
+		return false;
+	}
+
+	UAbilityUpgrade* AbilityUpgrade = UpgradesData[Index].UpgradeObject;
+	AbilityUpgrade->ActivateUpgrade();
+	OnUpgradeActivated.Broadcast(this, AbilityUpgrade);
+	return true;
+}
+
 bool UPlayerAbilityUpgradeComponent::GetAbilityUpgradeDataByClass(TSubclassOf<UAbilityUpgrade> UpgradeClass,
                                                                   FAbilityUpgradeData& OutData) const
 {
@@ -78,7 +129,7 @@ void UPlayerAbilityUpgradeComponent::PopulateUpgradesData()
 	{
 		return;
 	}
-	
+
 	UpgradesData.Empty();
 	TArray<FAbilityUpgradeData*> DataArray;
 	UpgradesDataTable->GetAllRows("", DataArray);
@@ -111,5 +162,6 @@ void UPlayerAbilityUpgradeComponent::CreateUpgradesObjects()
 		}
 
 		Data.UpgradeObject = Cast<UAbilityUpgrade>(NewUpgradeObject);
+		Data.UpgradeObject->InitUpgrade(GetOwner());
 	}
 }
