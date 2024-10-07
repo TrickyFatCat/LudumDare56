@@ -8,6 +8,7 @@
 #include "LudumDare56/Components/HitPointsComponent.h"
 #include "LudumDare56/Components/HitPointsRegenerationComponent.h"
 #include "LudumDare56/Components/PlayerAbilityManagerComponent.h"
+#include "LudumDare56/Components/PlayerAbilityUpgradeComponent.h"
 #include "LudumDare56/Components/PlayerLevelComponent.h"
 
 
@@ -19,6 +20,7 @@ APlayerTower::APlayerTower()
 	PlayerLevelComponent = CreateDefaultSubobject<UPlayerLevelComponent>(TEXT("PlayerLevel"));
 	HitPointsRegenerationComponent = CreateDefaultSubobject<UHitPointsRegenerationComponent>(TEXT("HitPointsRegeneration"));
 	PlayerAbilityManagerComponent = CreateDefaultSubobject<UPlayerAbilityManagerComponent>(TEXT("PlayerAbilityManager"));
+	PlayerAbilityUpgradeComponent = CreateDefaultSubobject<UPlayerAbilityUpgradeComponent>(TEXT("PlayerAbilityUpgrade"));
 }
 
 void APlayerTower::BeginPlay()
