@@ -28,6 +28,17 @@ bool UAbilityChargesComponent::DecreaseCharges()
 	return true;
 }
 
+bool UAbilityChargesComponent::IncreaseMaxCharges(const int32 Amount)
+{
+	if (Amount <= 0)
+	{
+		return false;
+	}
+
+	MaxCharges += Amount;
+	return true;
+}
+
 void UAbilityChargesComponent::RestoreCharge()
 {
 	if (CurrentCharges >= MaxCharges)

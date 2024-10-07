@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool DecreaseCharges();
 
+	UFUNCTION(BlueprintCallable)
+	bool IncreaseMaxCharges(const int32 Amount);
+
 	UFUNCTION(BlueprintGetter)
 	int32 GetCurrentCharges() const { return CurrentCharges; }
 	
