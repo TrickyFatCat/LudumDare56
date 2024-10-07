@@ -42,10 +42,9 @@ public:
 
 	virtual void StartPlay() override;
 
-	virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
-
-	virtual bool ClearPause() override;
-
+	UFUNCTION(BlueprintCallable, Category="TrickyGameMode")
+	void TogglePauseState();
+	
 	/**
 	 * Starts the session.
 	 */

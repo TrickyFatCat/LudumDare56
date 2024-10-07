@@ -4,6 +4,7 @@
 #include "TrickyGameModeBase.h"
 #include "TimerManager.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 ATrickyGameModeBase::ATrickyGameModeBase()
 {
@@ -12,14 +13,14 @@ ATrickyGameModeBase::ATrickyGameModeBase()
 void ATrickyGameModeBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	
+
 #if WITH_EDITORONLY_DATA
 	if (bShowDebug)
 	{
 		const FString Message = FString::Printf(TEXT("%s\nPreparation : %.2f\nGame Time : %.2f"),
-			*UEnum::GetValueAsString(CurrentState),
-			GetWorldTimerManager().GetTimerRemaining(PreparationTimer),
-			GetSessionRemainingTime());
+		                                        *UEnum::GetValueAsString(CurrentState),
+		                                        GetWorldTimerManager().GetTimerRemaining(PreparationTimer),
+		                                        GetSessionRemainingTime());
 		GEngine->AddOnScreenDebugMessage(0,
 		                                 DeltaSeconds,
 		                                 FColor::Magenta,
@@ -50,28 +51,30 @@ void ATrickyGameModeBase::StartPlay()
 	}
 }
 
-bool ATrickyGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
+void ATrickyGameModeBase::TogglePauseState()
 {
-	switch (CurrentState)
+	
+	if (!IsPaused())
 	{
-	case EGameModeState::Win:
-	case EGameModeState::Lose:
-	case EGameModeState::Transition:
-		return false;
+		switch (CurrentState)
+		{
+		case EGameModeState::Win:
+		case EGameModeState::Lose:
+		case EGameModeState::Transition:
+			return;
 
-	default:
-		SetState(EGameModeState::Pause);
-		break;
+		default:
+			SetState(EGameModeState::Pause);
+			break;
+		}
+
+		UGameplayStatics::SetGamePaused(this, true);
 	}
-
-	return Super::SetPause(PC, CanUnpauseDelegate);
-}
-
-bool ATrickyGameModeBase::ClearPause()
-{
-	SetState(PreviousState);
-
-	return Super::ClearPause();
+	else
+	{
+		SetState(PreviousState);
+		UGameplayStatics::SetGamePaused(this, false);
+	}
 }
 
 void ATrickyGameModeBase::StartSession()
