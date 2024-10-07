@@ -4,6 +4,7 @@
 #include "EnemyDataHandler.h"
 
 #include "EnemyAttackComponent.h"
+#include "EnemyExperienceComponent.h"
 #include "EnemyMovementComponent.h"
 #include "HitPointsComponent.h"
 #include "LudumDare56/Enemies/EnemyPawn.h"
@@ -61,6 +62,13 @@ void UEnemyDataHandler::InitializeComponent()
 	if (IsValid(EnemyMovementComponent))
 	{
 		EnemyMovementComponent->SetSpeed(Data->Speed);
+	}
+
+	UEnemyExperienceComponent* ExperienceComponent = GetOwner()->GetComponentByClass<UEnemyExperienceComponent>();
+
+	if (IsValid(ExperienceComponent))
+	{
+		ExperienceComponent->SetExperience(Data->Experience);
 	}
 
 	UEnemyAttackComponent* AttackComponent = GetOwner()->GetComponentByClass<UEnemyAttackComponent>();
