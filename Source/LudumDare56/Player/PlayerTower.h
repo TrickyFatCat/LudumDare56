@@ -51,4 +51,7 @@ private:
 
 	UFUNCTION()
 	void HandleZeroHitPoints(UHitPointsComponent* Component);
+
+	UFUNCTION()
+	void HandleLevelIncrease(UPlayerLevelComponent* Component, int32 NewLevel);
 };

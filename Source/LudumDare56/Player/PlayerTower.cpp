@@ -31,6 +31,11 @@ void APlayerTower::BeginPlay()
 	{
 		HitPointsComponent->OnZeroHitPoints.AddUniqueDynamic(this, &APlayerTower::HandleZeroHitPoints);
 	}
+
+	if (IsValid(PlayerLevelComponent))
+	{
+		PlayerLevelComponent->OnLevelIncreased.AddUniqueDynamic(this, &APlayerTower::HandleLevelIncrease);
+	}
 }
 
 void APlayerTower::Tick(float DeltaTime)
@@ -59,5 +64,15 @@ void APlayerTower::HandleZeroHitPoints(UHitPointsComponent* Component)
 	if (IsValid(GameMode))
 	{
 		GameMode->FinishSession(false);
+	}
+}
+
+void APlayerTower::HandleLevelIncrease(UPlayerLevelComponent* Component, int32 NewLevel)
+{
+	ATrickyGameModeBase* GameMode = UTrickyGameModeLibrary::GetTrickyGameMode(this);
+
+	if (IsValid(GameMode))
+	{
+		GameMode->StartUpgrade();
 	}
 }
