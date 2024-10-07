@@ -115,6 +115,7 @@ bool UPlayerAbilityManagerComponent::DeselectAbility(TSubclassOf<APlayerAbility>
 	}
 
 	APlayerAbility* DeselectedAbility = GetAbilityByClass(Ability);
+	DeselectedAbility->SetActorLocation(GetOwner()->GetActorLocation());
 	OnAbilityDeselected.Broadcast(this, DeselectedAbility);
 	return true;
 }
