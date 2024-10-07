@@ -53,7 +53,6 @@ void ATrickyGameModeBase::StartPlay()
 
 void ATrickyGameModeBase::TogglePauseState()
 {
-	
 	if (!IsPaused())
 	{
 		switch (CurrentState)
@@ -75,6 +74,28 @@ void ATrickyGameModeBase::TogglePauseState()
 		SetState(PreviousState);
 		UGameplayStatics::SetGamePaused(this, false);
 	}
+}
+
+void ATrickyGameModeBase::StartUpgrade()
+{
+	if (CurrentState == EGameModeState::Upgrade)
+	{
+		return;
+	}
+
+	SetState(EGameModeState::Upgrade);
+	UGameplayStatics::SetGamePaused(this, true);
+}
+
+void ATrickyGameModeBase::FinishUpgrade()
+{
+	if (CurrentState != EGameModeState::Upgrade)
+	{
+		return;
+	}
+
+	SetState(PreviousState);
+	UGameplayStatics::SetGamePaused(this, false);
 }
 
 void ATrickyGameModeBase::StartSession()

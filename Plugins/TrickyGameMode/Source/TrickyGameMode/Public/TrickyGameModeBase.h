@@ -15,7 +15,8 @@ enum class EGameModeState : uint8
 	Pause,
 	Win,
 	Lose,
-	Transition
+	Transition,
+	Upgrade
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStateChangedSignature, EGameModeState, NewState);
@@ -44,6 +45,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="TrickyGameMode")
 	void TogglePauseState();
+
+	UFUNCTION(BlueprintCallable, Category="TrickyGameMode")
+	void StartUpgrade();
+	
+	UFUNCTION(BlueprintCallable, Category="TrickyGameMode")
+	void FinishUpgrade();
 	
 	/**
 	 * Starts the session.

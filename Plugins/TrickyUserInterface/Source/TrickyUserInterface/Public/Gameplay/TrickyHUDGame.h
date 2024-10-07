@@ -47,6 +47,9 @@ protected:
 	/**A widget which will be shown in the transition game state.*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="HUD")
 	TSubclassOf<UBaseUserWidget> TransitionScreenWidget = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="HUD")
+	TSubclassOf<UBaseUserWidget> UpgradeScreenWidget = nullptr;
 private:
 	UPROPERTY(BlueprintReadOnly, Category="HUD", meta=(AllowPrivateAccess))
 	TMap<EGameModeState, TObjectPtr<UBaseUserWidget>> UserWidgets;
