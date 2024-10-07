@@ -10,7 +10,7 @@ class APlayerAbility;
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class LUDUMDARE56_API UAbilityUpgrade : public UObject
 {
 	GENERATED_BODY()
