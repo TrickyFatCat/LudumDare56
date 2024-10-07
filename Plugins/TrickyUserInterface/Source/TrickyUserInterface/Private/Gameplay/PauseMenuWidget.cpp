@@ -5,6 +5,8 @@
 
 #include "ButtonWidget.h"
 #include "TransitionScreenWidget.h"
+#include "TrickyGameModeBase.h"
+#include "TrickyGameModeLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
 void UPauseMenuWidget::NativeConstruct()
@@ -37,7 +39,7 @@ void UPauseMenuWidget::OnButtonClick_Implementation(UButtonWidget* Button)
 	if (Button == Button_Resume)
 	{
 		Hide();
-		UGameplayStatics::SetGamePaused(this, false);
+		UTrickyGameModeLibrary::GetTrickyGameMode(this)->TogglePauseState();
 	}
 	else if (Button == Button_Restart || Button == Button_Quit)
 	{
