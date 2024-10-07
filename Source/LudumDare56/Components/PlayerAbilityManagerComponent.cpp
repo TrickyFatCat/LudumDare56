@@ -33,6 +33,7 @@ void UPlayerAbilityManagerComponent::InitializeComponent()
 		for (auto AbilityClass : AbilitiesClasses)
 		{
 			APlayerAbility* NewAbility = GetWorld()->SpawnActorDeferred<APlayerAbility>(AbilityClass, SpawnTransform);
+			NewAbility->SetOwner(GetOwner());
 			NewAbility->FinishSpawning(SpawnTransform);
 			NewAbility->AttachToActor(GetOwner(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 			Abilities.Add(NewAbility);
