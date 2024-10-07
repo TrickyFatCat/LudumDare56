@@ -129,6 +129,8 @@ void ATrickyGameModeBase::FinishSession(const bool bIsVictory)
 	{
 		GetWorldTimerManager().ClearTimer(SessionTimer);
 	}
+
+	UGameplayStatics::SetGamePaused(this, true);
 }
 
 void ATrickyGameModeBase::StartPreparation()
