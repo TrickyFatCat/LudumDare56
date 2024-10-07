@@ -34,6 +34,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	UAnimMontage* IdleMontage = nullptr;
+
+	UFUNCTION(BlueprintCallable)
+	bool ApplyStun(const float Duration = 1.f);
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)

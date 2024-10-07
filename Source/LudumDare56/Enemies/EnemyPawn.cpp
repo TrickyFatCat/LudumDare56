@@ -67,6 +67,11 @@ void AEnemyPawn::BeginPlay()
 	Super::BeginPlay();
 }
 
+bool AEnemyPawn::ApplyStun(const float Duration)
+{
+	return EnemyStateControllerComponent->EnterStunState(Duration);
+}
+
 void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Component, EEnemyState NewState)
 {
 	switch (NewState)
