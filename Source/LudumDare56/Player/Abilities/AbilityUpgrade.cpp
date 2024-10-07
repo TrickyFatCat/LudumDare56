@@ -3,10 +3,9 @@
 
 #include "AbilityUpgrade.h"
 
-#include "Kismet/GameplayStatics.h"
 #include "LudumDare56/Components/PlayerAbilityManagerComponent.h"
 
-void UAbilityUpgrade::ApplyUpgrade()
+void UAbilityUpgrade::ActivateUpgrade()
 {
 	ActivateUpgradeEffect();
 }

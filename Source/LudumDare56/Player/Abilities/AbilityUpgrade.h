@@ -20,7 +20,7 @@ public:
 	TSubclassOf<APlayerAbility> AbilityClass = nullptr;
 	
 	UFUNCTION()
-	void ApplyUpgrade();
+	void ActivateUpgrade();
 
 	UFUNCTION()
 	void InitUpgrade(const AActor* PlayerActor);
