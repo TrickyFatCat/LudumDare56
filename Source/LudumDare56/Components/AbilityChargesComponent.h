@@ -35,7 +35,7 @@ public:
 	FTimerHandle GetRestoreTimer() const { return RestoreTimerHandle; }
 
 	UFUNCTION(BlueprintPure)
-	bool HasCharges() const { return CurrentCharges <= 0; }
+	bool HasCharges() const { return CurrentCharges > 0; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

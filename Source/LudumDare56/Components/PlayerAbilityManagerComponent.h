@@ -31,12 +31,17 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	virtual void TickComponent(float DeltaTime,
+	                           enum ELevelTick TickType,
+	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+public:
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilitySelectedDynamicSignature OnAbilitySelected;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityDeselectedDynamicSignature OnAbilityDeselected;
-	
+
 	UFUNCTION(BlueprintCallable)
 	bool SelectAbility(TSubclassOf<APlayerAbility> Ability);
 
@@ -44,14 +49,13 @@ public:
 	bool DeselectAbility(TSubclassOf<APlayerAbility> Ability);
 
 	UFUNCTION(BlueprintCallable)
-	bool UseSelectedAbility(const FVector& Location);
+	bool UseSelectedAbility();
 
 	UFUNCTION(BlueprintGetter)
 	APlayerAbility* GetSelectedAbility() const { return SelectedAbility; }
 
 	UFUNCTION(BlueprintPure)
 	APlayerAbility* GetAbilityByClass(TSubclassOf<APlayerAbility> Ability);
-
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
@@ -62,4 +66,16 @@ protected:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetSelectedAbility)
 	APlayerAbility* SelectedAbility = nullptr;
+
+	UPROPERTY()
+	APlayerController* PlayerController = nullptr;
+
+	UPROPERTY()
+	APlayerCameraManager* PlayerCameraManager = nullptr;
+
+	UPROPERTY()
+	APawn* PlayerPawn = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float AimRadius = 4000.f;
 };
