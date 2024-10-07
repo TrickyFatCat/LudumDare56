@@ -32,7 +32,7 @@ void AEnemyProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-auto AEnemyProjectile::SetProjectileData(const FVector& Direction, const int32 NewDamage) -> void
+void AEnemyProjectile::SetProjectileData(const FVector& Direction, const int32 NewDamage)
 {
 	MovementDirection = Direction;
 	Damage = NewDamage <= 0 ? 1 : NewDamage;
