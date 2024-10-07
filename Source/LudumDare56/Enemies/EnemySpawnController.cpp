@@ -188,7 +188,9 @@ void AEnemySpawnController::HandleEnemyDeath(UHitPointsComponent* Component)
 
 void AEnemySpawnController::HandlePlayerLevelIncreased(UPlayerLevelComponent* Component, int32 NewLevel)
 {
+	StopSpawn();
 	CurrentLevel = NewLevel;
+	StartSpawn();
 }
 
 void AEnemySpawnController::HandleGameStateChanged(EGameModeState NewState)
