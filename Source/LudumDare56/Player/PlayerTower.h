@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerTower.generated.h"
 
+class UAbilityUpgrade;
 class UPlayerAbilityUpgradeComponent;
 class UPlayerAbilityManagerComponent;
 class UPlayerLevelComponent;
@@ -58,4 +59,7 @@ private:
 
 	UFUNCTION()
 	void HandleLevelIncrease(UPlayerLevelComponent* Component, int32 NewLevel);
+
+	UFUNCTION()
+	void HandleUpgradeActiavted(UPlayerAbilityUpgradeComponent* Component, UAbilityUpgrade* AbilityUpgrade);
 };

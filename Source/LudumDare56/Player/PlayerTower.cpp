@@ -38,6 +38,11 @@ void APlayerTower::BeginPlay()
 	{
 		PlayerLevelComponent->OnLevelIncreased.AddUniqueDynamic(this, &APlayerTower::HandleLevelIncrease);
 	}
+
+	if (IsValid(PlayerAbilityUpgradeComponent))
+	{
+		PlayerAbilityUpgradeComponent->OnUpgradeActivated.AddUniqueDynamic(this, &APlayerTower::HandleUpgradeActiavted);
+	}
 }
 
 void APlayerTower::Tick(float DeltaTime)
@@ -75,6 +80,18 @@ void APlayerTower::HandleLevelIncrease(UPlayerLevelComponent* Component, int32 N
 
 	if (IsValid(GameMode))
 	{
+		PlayerAbilityUpgradeComponent->ChooseCurrentUpgrades();
 		GameMode->StartUpgrade();
+	}
+}
+
+void APlayerTower::HandleUpgradeActiavted(UPlayerAbilityUpgradeComponent* Component, UAbilityUpgrade* AbilityUpgrade)
+{
+	
+	ATrickyGameModeBase* GameMode = UTrickyGameModeLibrary::GetTrickyGameMode(this);
+
+	if (IsValid(GameMode))
+	{
+		GameMode->FinishUpgrade();
 	}
 }
