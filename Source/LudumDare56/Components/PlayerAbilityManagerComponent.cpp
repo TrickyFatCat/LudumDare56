@@ -3,7 +3,6 @@
 
 #include "PlayerAbilityManagerComponent.h"
 
-#include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "LudumDare56/Player/Abilities/PlayerAbility.h"
