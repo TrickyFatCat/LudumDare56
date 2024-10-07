@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintGetter)
 	FTimerHandle GetRestoreTimer() const { return RestoreTimerHandle; }
 
+	UFUNCTION(BlueprintGetter)
+	float GetRestoreDuration() const { return RestoreDuration; }
+
 	UFUNCTION(BlueprintPure)
 	bool HasCharges() const { return CurrentCharges > 0; }
 
@@ -47,7 +50,7 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, BlueprintGetter=GetCurrentCharges)
 	int32 CurrentCharges = 2;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetRestoreDuration);
 	float RestoreDuration = 2.f;
 
 	UPROPERTY(Blueprintgetter=GetRestoreTimer)
