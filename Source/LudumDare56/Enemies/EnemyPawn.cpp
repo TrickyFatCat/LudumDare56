@@ -114,6 +114,7 @@ void AEnemyPawn::HandleZeroHitPoints(UHitPointsComponent* Component)
 {
 	EnemyStateControllerComponent->EnterDeathState();
 	EnemyExperienceComponent->GiveExperience();
+	CapsuleComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AEnemyPawn::HandleEnterAttackRange(UDistanceCheckComponent* Component)
