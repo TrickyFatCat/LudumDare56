@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PlayerAbility.h"
 #include "UObject/Object.h"
 #include "AbilityUpgrade.generated.h"
 
@@ -30,5 +31,5 @@ protected:
 	APlayerAbility* Ability = nullptr;
 	
 	UFUNCTION(BlueprintNativeEvent)
-	void ActivateUpgradeEffect();
+	void ActivateUpgradeEffect(APlayerAbility* TargetAbility);
 };

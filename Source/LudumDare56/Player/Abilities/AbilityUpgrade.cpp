@@ -7,7 +7,7 @@
 
 void UAbilityUpgrade::ActivateUpgrade()
 {
-	ActivateUpgradeEffect();
+	ActivateUpgradeEffect(Ability);
 }
 
 void UAbilityUpgrade::InitUpgrade(const AActor* PlayerActor)
@@ -27,6 +27,6 @@ void UAbilityUpgrade::InitUpgrade(const AActor* PlayerActor)
 	Ability = AbilityManagerComponent->GetAbilityByClass(AbilityClass);
 }
 
-void UAbilityUpgrade::ActivateUpgradeEffect_Implementation()
+void UAbilityUpgrade::ActivateUpgradeEffect_Implementation(APlayerAbility* TargetAbility)
 {
 }
