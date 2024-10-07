@@ -21,6 +21,9 @@ void UHitPointsRegenerationComponent::InitializeComponent()
 		HitPointsComponent = GetOwner()->GetComponentByClass<UHitPointsComponent>();
 		StartRegeneration();
 	}
+
+	RegenerationRate = DefaultRegenerationRate;
+	RegenerationPower = DefaultRegenerationPower;
 }
 
 void UHitPointsRegenerationComponent::SetRegenerationRate(const float Value)
@@ -32,6 +35,18 @@ void UHitPointsRegenerationComponent::SetRegenerationRate(const float Value)
 
 	StopRegeneration();
 	RegenerationRate = Value;
+	StartRegeneration();
+}
+
+void UHitPointsRegenerationComponent::SetRegenerationPower(const int32 Value)
+{
+	if (Value <= 0)
+	{
+		return;
+	}
+
+	StopRegeneration();
+	RegenerationPower = Value;
 	StartRegeneration();
 }
 

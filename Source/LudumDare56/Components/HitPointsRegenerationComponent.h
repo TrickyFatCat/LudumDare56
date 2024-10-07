@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetRegenerationRate(const float Value);
 
+	UFUNCTION(BlueprintCallable)
+	void SetRegenerationPower(const int32 Value);
+
 protected:
 	UPROPERTY()
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
