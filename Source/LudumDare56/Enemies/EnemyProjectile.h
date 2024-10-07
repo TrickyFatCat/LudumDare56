@@ -36,7 +36,8 @@ protected:
 	FOnHitDynamicSignature OnHit;
 
 public:
-	auto SetProjectileData(const FVector& Direction, const int32 NewDamage) -> void;
+	UFUNCTION(BlueprintCallable)
+	void SetProjectileData(const FVector& Direction, const int32 NewDamage);
 
 private:
 	FVector MovementDirection = FVector::ForwardVector;
