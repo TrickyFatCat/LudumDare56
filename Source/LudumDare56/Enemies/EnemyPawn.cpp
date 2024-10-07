@@ -99,6 +99,12 @@ void AEnemyPawn::HandleEnemyStateChanged(UEnemyStateControllerComponent* Compone
 		EnemyDeathComponent->StartDeathSequence();
 		break;
 
+	case EEnemyState::Stun:
+		SkeletalMeshComponent->PlayAnimation(IdleMontage, true);
+		DistanceCheckComponent->Deactivate();
+		EnemyMovementComponent->Deactivate();
+		break;
+
 	default:
 		DistanceCheckComponent->Deactivate();
 		EnemyMovementComponent->Deactivate();

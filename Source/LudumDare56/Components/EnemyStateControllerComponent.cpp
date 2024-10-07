@@ -92,6 +92,7 @@ bool UEnemyStateControllerComponent::ChangeState(const EEnemyState NewState)
 		return false;
 	}
 
+	PreviousState = CurrentState;
 	CurrentState = NewState;
 	OnStateChanged.Broadcast(this, CurrentState);
 	return true;
@@ -99,7 +100,7 @@ bool UEnemyStateControllerComponent::ChangeState(const EEnemyState NewState)
 
 void UEnemyStateControllerComponent::ExitStunState()
 {
-	EnterIdleState();
+	ChangeState(PreviousState);
 }
 
 void UEnemyStateControllerComponent::StopStunTimer()

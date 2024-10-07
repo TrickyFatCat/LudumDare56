@@ -65,6 +65,9 @@ protected:
 
 	FTimerHandle StunTimerHandle;
 
+	UPROPERTY()
+	EEnemyState PreviousState = EEnemyState::Idle;
+
 	UFUNCTION()
 	void ExitStunState();
 

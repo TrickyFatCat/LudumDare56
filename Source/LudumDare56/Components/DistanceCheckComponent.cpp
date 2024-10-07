@@ -13,8 +13,8 @@ UDistanceCheckComponent::UDistanceCheckComponent()
 
 void UDistanceCheckComponent::Activate(bool bReset)
 {
-	Super::Activate(bReset);
 	SetComponentTickEnabled(true);
+	Super::Activate(bReset);
 }
 
 void UDistanceCheckComponent::Deactivate()
